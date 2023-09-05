@@ -13,7 +13,7 @@ form.addEventListener("submit", (e) => {
    mes2.textContent = "";
 
    async function data() {
-      const response = await fetch("http://localhost:3000/weather?address="+location);
+      const response = await fetch("/weather?address="+location);
       const JSONdata = await response.json();
          // console.log(JSONdata);
       if (JSONdata.error) {
