@@ -1,25 +1,28 @@
-const request = require('request');
+// const request = require('request');
+const axios = require("axios");
 
-const geoCode = (address, callback) => {
-    const geocodingUrl = "https://geocode.maps.co/search?q=" + encodeURIComponent(address);
-    request({ url: geocodingUrl, json: true }, (error, { body }) => {
-        if (error) {
-            callback("UNABLE TO CONNECT WITH LOCATION SERVICE!", undefined);
-        }
-        else if (body.length === 0) {
-            callback("UNABLE TO FIND THE LOCATION!",undefined);
+const geoCode = async (address, callback) => {
+    try {
+        const geocodingUrl = "https://geocode.maps.co/search?q=" + encodeURIComponent(address);
+        // request({ url: geocodingUrl, json: true }, (error, { body }) => {
+        const response = await axios.get(geocodingUrl);
+
+        if (response.data[0] === undefined) {
+            callback("UNABLE TO FIND THE LOCATION!", undefined);
         }
         else {
-           
-            callback(undefined,{
-                latitude:body[0].lat,
-                longitude:body[0].lon,
-                location:body[0].display_name
+
+            callback(undefined, {
+                latitude: response.data[0].lat,
+                longitude: response.data[0].lon,
+                location: response.data[0].display_name
             }
             );
         }
-
-    });
+    }
+    catch (error) {
+        callback("UNABLE TO CONNECT WITH LOCATION SERVICE!", undefined);
+    }
 
 }
 
