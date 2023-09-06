@@ -29,9 +29,10 @@ form.addEventListener("submit", (e) => {
          mes1.textContent = "CHECK YOUR INTERNET CONNECTION!";
       }
    }
+   data();
 })
-      data();
-   
+
+
 
 
 
