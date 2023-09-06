@@ -13,19 +13,25 @@ form.addEventListener("submit", (e) => {
    mes2.textContent = "";
 
    async function data() {
-      const response = await fetch("/weather?address="+location);
-      const JSONdata = await response.json();
+      try {
+         const response = await fetch("/weather?address=" + location);
+         const JSONdata = await response.json();
          // console.log(JSONdata);
-      if (JSONdata.error) {
-         mes1.textContent = JSONdata.error;
+         if (JSONdata.error) {
+            mes1.textContent = JSONdata.error;
+         }
+         else {
+            mes1.textContent = JSONdata.location;
+            mes2.textContent = JSONdata.forecast;
+         }
       }
-      else {
-         mes1.textContent = JSONdata.location;
-         mes2.textContent = JSONdata.forecast;
+      catch (e) {
+         mes1.textContent = "CHECK YOUR INTERNET CONNECTION!";
       }
    }
-   data();
 })
+      data();
+   
 
 
 
